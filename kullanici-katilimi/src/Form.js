@@ -4,7 +4,11 @@ import axios from "axios";
 
 let schema = yup.object().shape({
   name: yup.string().required("Name is required"),
-  email: yup.string().email().required("E-mail is required"),
+  email: yup
+    .string()
+    .email()
+    .required("E-mail is required")
+    .notOneOf(["waffle@syrup.com"], "This email address has been added before"),
   password: yup
     .string()
     .min(6, "Password must be at least 6 characters")
