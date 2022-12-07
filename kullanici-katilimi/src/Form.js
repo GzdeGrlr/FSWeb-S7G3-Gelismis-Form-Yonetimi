@@ -162,14 +162,12 @@ function Form() {
         </p>
       </form>
       <div>
-        <h3>Kayıtlı Kullanıcı</h3>
         {kayitliUyeler && (
           <div
             style={{
               backgroundColor: "#FBE5C8",
               maxWidth: "600px",
               margin: "20px auto",
-              padding: "5px 0",
             }}
           >
             <pre>
