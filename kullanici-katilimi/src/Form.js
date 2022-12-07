@@ -28,7 +28,7 @@ function Form() {
   });
 
   const [disabled, setDisabled] = useState(true);
-  const [kayitliUyeler, setKayitliUyeler] = useState();
+  const [kayitliUyeler, setKayitliUyeler] = useState([]);
 
   useEffect(() => {
     schema.isValid(form).then((valid) => setDisabled(!valid));
@@ -69,16 +69,24 @@ function Form() {
   const handleSubmit = (event) => {
     event.preventDefault();
 
+    const newUser = {
+      name: form.name.trim(),
+      email: form.email.trim(),
+      password: form.password,
+      terms: form.terms,
+    };
+
     axios
-      .post("https://reqres.in/api/user", form)
+      .post("https://reqres.in/api/user", newUser)
       .then((res) => {
-        setKayitliUyeler(res.data.id);
+        setKayitliUyeler(res.data);
+        console.log(res.data);
 
         setForm({
           name: "",
           email: "",
           password: "",
-          terms: "",
+          terms: false,
         });
       })
 
@@ -164,7 +172,15 @@ function Form() {
               padding: "5px 0",
             }}
           >
-            <p> User is created : {kayitliUyeler}</p>
+            <pre>
+              {Object.entries(kayitliUyeler).map(([key, value]) => {
+                return (
+                  <div>
+                    {key} : {value.toString()}
+                  </div>
+                );
+              })}
+            </pre>
           </div>
         )}
       </div>
