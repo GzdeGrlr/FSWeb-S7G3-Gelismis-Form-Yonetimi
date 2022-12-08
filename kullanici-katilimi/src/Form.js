@@ -3,11 +3,14 @@ import * as yup from "yup";
 import axios from "axios";
 
 let schema = yup.object().shape({
-  name: yup.string().required("Name is required"),
+  name: yup
+    .string()
+    .min(2, "Your name should contain at least 2 characters")
+    .required("Name is required"),
   email: yup
     .string()
     .email()
-    .required("E-mail is required")
+    .required("this must be a valid email")
     .notOneOf(["waffle@syrup.com"], "This email address has been added before"),
   password: yup
     .string()
@@ -102,8 +105,8 @@ function Form() {
     <div>
       <div style={{ color: "red" }}>
         <div>{errors.name}</div>
-        <div>{errors.email}</div>
-        <div>{errors.password}</div>
+        <div className="cy-mailError">{errors.email}</div>
+        <div className="cy-passwordError">{errors.password}</div>
         <div>{errors.terms}</div>
       </div>
 
@@ -162,12 +165,18 @@ function Form() {
           />
         </p>
         <p>
-          <input type="submit" disabled={disabled} />
+          <input
+            type="submit"
+            value="Submit"
+            disabled={disabled}
+            className="cy-submit"
+          />
         </p>
       </form>
       <div>
         {kayitliUyeler && (
           <div
+            className="cy-uyeDiv"
             style={{
               backgroundColor: "#FBE5C8",
               maxWidth: "600px",
